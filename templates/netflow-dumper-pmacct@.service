@@ -1,0 +1,12 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=netflow capture daemon
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/nfacctd -f "{{ netflow_dumper_conf_dir }}/%i.conf"
+
+[Install]
+WantedBy=multi-user.target

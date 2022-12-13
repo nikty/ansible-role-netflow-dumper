@@ -1,0 +1,36 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+platforms:
+  - name: test-ansible-role-netflow-dumper
+    box: ${TEST_PLATFORM_BOX:-debian/buster64}
+    box_version: ${TEST_PLATFORM_BOX_VERSION:-""}
+    config_options:
+      synced_folder: no
+    memory: 512
+    cpus: 1
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      test-ansible-role-netflow-dumper:
+        netflow_dumper_instances:
+          - collector: pmacct
+            name: pmacct-1.example.com
+            listen_port: 558
+            flows_dir: /flows/pmacct-1.example.com
+            flows_dir_hierarchy: "%Y/%Y/%m/%d"
+          - collector: pmacct
+            name: pmacct-2.example.com
+            listen_port: 558
+            flows_dir: /flows/pmacct-2.example.com
+          - collector: nfdump
+            name: nfdump-1.example.com
+            flows_dir: /flows/nfdump-1.example.com
+            listen_port: 6432
+            flows_dir_hierarchy: 3 # man nfcapd
+
+verifier:
+  name: ansible

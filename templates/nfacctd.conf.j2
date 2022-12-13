@@ -1,0 +1,12 @@
+# {{ ansible_managed }}
+syslog: daemon
+nfacctd_port: {{ item['listen_port'] }}
+aggregate: timestamp_start,timestamp_end,proto,src_host,dst_host,src_port,dst_port
+plugins: print
+print_refresh_time: {{ item['rotate_interval'] | default( netflow_dumper_rotate_interval ) }}
+print_output: csv
+print_output_file: {{ [ item['flows_dir'], item['flows_dir_hierarchy'] | default( netflow_dumper_pmacct_flows_dir_hierarchy ),
+                        (item['pmacct_filename'] | default( netflow_dumper_pmacct_filename )) ] | join("/") }}
+print_history: {{ item['rotate_interval'] | default( netflow_dumper_rotate_interval ) }}
+print_history_roundoff: m
+print_output_file_append: true

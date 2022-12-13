@@ -1,0 +1,14 @@
+---
+netflow_dumper_conf_dir: /opt/netflow-dumper/conf
+
+# How often to rotate dump files (in seconds)
+netflow_dumper_rotate_interval: 900
+
+# netflow_dumper_listen_port: 2055
+# netflow_dumper_listen_address:
+
+netflow_dumper_pmacct_filename: "file-%Y%m%d-%H%M%S.txt"
+netflow_dumper_pmacct_flows_dir_hierarchy: "%Y/%m/%d"
+
+# See 'man nfcapd'
+netflow_dumper_nfdump_flows_dir_hierarchy: 1

@@ -1,0 +1,35 @@
+---
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install collector packages
+  package:
+    name: "{{ lookup('vars', 'netflow_dumper_' ~ item ~ '_packages') }}"
+  loop: "{{ netflow_dumper_instances | map(attribute='collector') | list | unique }}"
+
+# - name: Disable default nfdump service
+#   service:
+#     name: nfdump
+#     state: stopped
+#     enabled: no
+
+- name: Create config dir
+  file:
+    path: "{{ netflow_dumper_conf_dir }}"
+    state: directory
+
+
+- name: Template pmacct systemd service file
+  template:
+    src: netflow-dumper-pmacct@.service
+    dest: /etc/systemd/system/netflow-dumper-pmacct@.service
+    
+- name: Run tasks for pmacct
+  include_tasks: pmacct.yaml
+  loop: "{{ netflow_dumper_instances | selectattr('collector', 'eq', 'pmacct') | list }}"
+
+- name: Run tasks for nfdump
+  include_tasks: nfdump.yaml
+  loop: "{{ netflow_dumper_instances | selectattr('collector', 'eq', 'nfdump') | list }}"
