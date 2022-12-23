@@ -10,5 +10,10 @@ _netflow_dumper_nfdump_packages:
   default:
     - nfdump
 
+_netflow_dumper_flow_tools_packages:
+  default:
+    - flow-tools
+    
 netflow_dumper_pmacct_packages: "{{ _netflow_dumper_pmacct_packages[ ansible_os_family ] | default( _netflow_dumper_pmacct_packages['default'] ) }}"
 netflow_dumper_nfdump_packages: "{{ _netflow_dumper_nfdump_packages[ ansible_os_family ] | default( _netflow_dumper_nfdump_packages['default'] ) }}"
+netflow_dumper_flow_tools_packages: "{{ _netflow_dumper_flow_tools_packages[ ansible_os_family ] | default( _netflow_dumper_flow_tools_packages['default'] ) }}"

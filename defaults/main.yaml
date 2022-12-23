@@ -12,3 +12,6 @@ netflow_dumper_pmacct_flows_dir_hierarchy: "%Y/%m/%d"
 
 # See 'man nfcapd'
 netflow_dumper_nfdump_flows_dir_hierarchy: 1
+
+
+netflow_dumper_flow_tools_compression: 1

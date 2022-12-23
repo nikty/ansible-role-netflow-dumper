@@ -1,0 +1,17 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=netflow capture daemon
+After=network.target auditd.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/flow-capture -D 0 -w "{{ item['flows_dir'] }}"
+{%- if netflow_dumper_flow_tools_compression is defined and netflow_dumper_flow_tools_compression is not none %} -z {{ netflow_dumper_flow_tools_compression }}{% endif %}
+{{- " 127.0.0.1/127.0.0.1/" ~ item['listen_port'] }}
+
+[Install]
+WantedBy=multi-user.target
+
+
+#-z 1 -w /flow/hnt1-k7.obit.ru 127.0.0.1/127.0.0.1/558 -E 300G

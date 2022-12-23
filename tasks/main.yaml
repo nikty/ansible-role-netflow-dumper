@@ -1,5 +1,4 @@
 ---
-
 - name: Update apt cache
   apt:
     update_cache: yes
@@ -33,3 +32,7 @@
 - name: Run tasks for nfdump
   include_tasks: nfdump.yaml
   loop: "{{ netflow_dumper_instances | selectattr('collector', 'eq', 'nfdump') | list }}"
+
+- name: Run tasks for flow-tools
+  include_tasks: flow-tools.yaml
+  loop: "{{ netflow_dumper_instances | selectattr('collector', 'eq', 'flow_tools') | list }}"
