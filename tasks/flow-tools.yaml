@@ -1,3 +1,10 @@
+- name: Disable default service
+  service:
+    name: flow-capture
+    state: stopped
+    enabled: no
+      
+
 - name: Run tasks for flow-tools
   include_tasks: flow_tools_instance.yaml
   loop: "{{ netflow_dumper_instances | selectattr('collector', 'eq', 'flow_tools') | list }}"
