@@ -21,7 +21,7 @@ provisioner:
             name: pmacct-1.example.com
             listen_port: 558
             flows_dir: /flows/pmacct-1.example.com
-            flows_dir_hierarchy: "%Y/%Y/%m/%d"
+            pmacct_subdir_hierarchy: "%Y/%Y/%m/%d"
           - collector: pmacct
             name: pmacct-2.example.com
             listen_port: 558
@@ -30,7 +30,14 @@ provisioner:
             name: nfdump-1.example.com
             flows_dir: /flows/nfdump-1.example.com
             listen_port: 6432
-            flows_dir_hierarchy: 3 # man nfcapd
+            nfdump_subdir_hierarchy: 3 # man nfcapd
+          - collector: flow_tools
+            name: flow-tools-1.example.com
+            flows_dir: /flows/flow-tools-1.example.com
+            listen_port: 165
+            flow_tools_expire_size: 300G
+            flow_tools_subdir_hierarchy: -2
+
 
 verifier:
   name: ansible

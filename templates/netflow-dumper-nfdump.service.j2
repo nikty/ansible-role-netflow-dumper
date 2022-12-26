@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=netflow capture daemon
+After=network.target auditd.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/nfcapd -l "{{ item['flows_dir'] }}" 
+{{- " -p {}".format( item['listen_port'] ) }}
+{{- " -t {}".format( item['rotate_interval'] | default( netflow_dumper_rotate_interval ) ) }}
+{{- " -S " ~ ( item['nfdump_subdir_hierarchy'] | default( netflow_dumper_nfdump_subdir_hierarchy ) ) }}
+
+[Install]
+WantedBy=multi-user.target

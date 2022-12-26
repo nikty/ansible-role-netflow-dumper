@@ -1,0 +1,17 @@
+- name: Template systemd service unit
+  template:
+    src: netflow-dumper-nfdump.service.j2
+    dest: /etc/systemd/system/netflow-dumper-nfdump-{{ item.name }}.service
+
+
+- name: Create flows directory
+  file:
+    path: "{{ item['flows_dir'] }}"
+    state: directory
+
+
+- name: Start and enable service for {{ item.name }}
+  systemd:
+    name: netflow-dumper-nfdump-{{ item.name }}
+    state: started
+    enabled: yes

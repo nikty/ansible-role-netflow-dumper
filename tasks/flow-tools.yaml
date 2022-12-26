@@ -1,17 +1,3 @@
-- name: Template systemd service unit
-  template:
-    src: netflow-dumper-flow-tools.service.j2
-    dest: /etc/systemd/system/netflow-dumper-flow-tools-{{ item.name }}.service
-
-
-- name: Create flows directory
-  file:
-    path: "{{ item['flows_dir'] }}"
-    state: directory
-
-
-- name: Start and enable service for {{ item.name }}
-  systemd:
-    name: netflow-dumper-flow-tools-{{ item.name }}
-    state: started
-    enabled: yes
+- name: Run tasks for flow-tools
+  include_tasks: flow_tools_instance.yaml
+  loop: "{{ netflow_dumper_instances | selectattr('collector', 'eq', 'flow_tools') | list }}"

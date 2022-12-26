@@ -1,14 +1,8 @@
-- name: Template pmacct configs for {{ item.name }}
+- name: Template pmacct systemd service file
   template:
-    src: "nfacctd.conf.j2"
-    dest: "{{ netflow_dumper_conf_dir }}/{{ item.name }}.conf"
-#  loop: "{{ netflow_dumper_instances | selectattr('collector', 'eq', 'pmacct') | list }}"
+    src: netflow-dumper-pmacct@.service
+    dest: /etc/systemd/system/netflow-dumper-pmacct@.service
 
-
-- name: Setup pmacct service instance for {{ item.name }}
-  systemd:
-    daemon_reload: yes
-    name: "netflow-dumper-pmacct@{{ item.name }}"
-    state: started
-    enabled: yes
-#  loop: "{{ netflow_dumper_instances | selectattr('collector', 'eq', 'pmacct') | list }}"
+- name: Run tasks for pmacct
+  include_tasks: pmacct_instance.yaml
+  loop: "{{ netflow_dumper_instances | selectattr('collector', 'eq', 'pmacct') | list }}"

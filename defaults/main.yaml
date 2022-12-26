@@ -1,17 +1,36 @@
 ---
+# Where to store persistent configuration files
 netflow_dumper_conf_dir: /opt/netflow-dumper/conf
 
 # How often to rotate dump files (in seconds)
 netflow_dumper_rotate_interval: 900
 
+# Listening address and port
 # netflow_dumper_listen_port: 2055
 # netflow_dumper_listen_address:
 
+netflow_dumper_instances: []
+# - collector: pmacct # pmacct, nfdump, flow_tools
+#   name: pmacct-1.example.com # Name of the collector system service
+#   listen_port: 558 # Per-collector listening port
+#   flows_dir: /flows/pmacct-1.example.com # Where to store dump files
+#   pmacct_subdir_hierarchy: "%Y/%Y/%m/%d" # Format of subdirectory hierarchy (collector-specific)
+# - collector: flow_tools
+#   flow_tools_compression: 1
+#   flow_tools_expire_size: 10G
+#   flow_tools_subdir_hierarchy: -2
+
+
+# Pmacct specific
+
 netflow_dumper_pmacct_filename: "file-%Y%m%d-%H%M%S.txt"
-netflow_dumper_pmacct_flows_dir_hierarchy: "%Y/%m/%d"
+netflow_dumper_pmacct_subdir_hierarchy: "%Y/%m/%d"
 
-# See 'man nfcapd'
-netflow_dumper_nfdump_flows_dir_hierarchy: 1
+# Nfdump specific
 
+netflow_dumper_nfdump_subdir_hierarchy: 1
+
+# Flow-tools specific
 
 netflow_dumper_flow_tools_compression: 1
+
