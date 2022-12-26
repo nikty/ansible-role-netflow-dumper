@@ -2,6 +2,7 @@
   template:
     src: netflow-dumper-flow-tools.service.j2
     dest: /etc/systemd/system/netflow-dumper-flow-tools-{{ item.name }}.service
+  register: p
 
 
 - name: Create flows directory
@@ -13,5 +14,7 @@
 - name: Start and enable service for {{ item.name }}
   systemd:
     name: netflow-dumper-flow-tools-{{ item.name }}
-    state: started
+    state: restarted
     enabled: yes
+  when: p is changed
+
